@@ -23,23 +23,45 @@ load_dotenv()
 
 MODEL = "gemini-2.5-flash"
 
+def tell_pm(country : str) -> str:
+    COUNTRY_PM_TOOL = {
+        "India": "Narendra Modi",
+        "United Kingdom": "Rishi Sunak",
+        "Canada": "Justin Trudeau",
+        "Australia": "Anthony Albanese",
+        "New Zealand": "Christopher Luxon"
+    }
+     
+    return COUNTRY_PM_TOOL.get(country, "sorry I don't know")
 
 root_agent = LlmAgent(
     model=MODEL,
     name="travel_coordinator",
     description=(
-        "Main travel assistant that coordinates trip planning, "
-        "flight search, and hotel search."
+        "You are an agents that tells prime minister of different countries"
     ),
-    instruction="""You are a friendly travel coordinator managing a team of 3 specialists.
+    instruction="""
+    You are a friendly agent that tells prime minister of different countries. Use tool tell_pm first to find the PM and if it does not contain info use your own brain.
 
-                When a user asks to plan a trip:
-                1. FIRST delegate to 'trip_planner' to create the itinerary.
-                2. THEN delegate to 'flight_search' to find real flight options.
-                3. THEN delegate to 'hotel_search' to find real hotel options.
+    for greetings return normal response.
 
-
-                For simple greetings or non-travel questions, respond directly and politely.
-                Always be enthusiastic about travel!""",
+    """,
+    tools=[tell_pm]
     
 )
+
+# root_agent = LlmAgent(
+#     model=MODEL,
+#     name="travel_coordinator",
+#     description=(
+#         "You are an agents that tells prime minister of different countries"
+#     ),
+#     instruction="""
+#     You are a friendly agent that tells prime minister of different countries. 
+
+#     for greetings return normal response.
+
+#     """
+    
+# )
+    
