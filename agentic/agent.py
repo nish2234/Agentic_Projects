@@ -17,6 +17,8 @@ from google.adk.agents import LlmAgent
 # Linux / macOS
 #source venv/bin/activate
 
+#after this (pip install -r requirements.txt)
+
 
 
 load_dotenv()
